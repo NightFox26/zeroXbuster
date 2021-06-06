@@ -8656,6 +8656,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: 1879d7960a23dea4dbd00031ae16369f, type: 3}
     postionTop: 1
     message: Veux tu investir des points de chasseur ?
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -13645,6 +13649,10 @@ MonoBehaviour:
     postionTop: 1
     message: "Comment se passe la chasse ?\nCes Mavericks  qui se retournent contre
       nous  sont un fl\xE9au !"
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -29029,6 +29037,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: 5cbf832cb7be7a242b0e9452b4f5d072, type: 3}
     postionTop: 1
     message: Viens me prouver que tu es un veritable guerrier !
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -30650,6 +30662,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: bcc0a13de6ca57a439d8288e018a4c33, type: 3}
     postionTop: 1
     message: Ramene moi des composants pour que je te fabrique des satelites de combat.
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -46195,6 +46211,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: 43c8ba62573429e42bbe15efc7b02461, type: 3}
     postionTop: 1
     message: J'ai de nouveau articles en te vendre !
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -52006,6 +52026,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: f0cf633ccce93e146ad8c11639fb0a55, type: 3}
     postionTop: 1
     message: Verifie la configuration des failles avant de partir en chasse.
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -59173,6 +59197,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: 6a46377620cdf3b4aa4a9f357c626b53, type: 3}
     postionTop: 1
     message: Veux tu consulter ta gallerie de artworks ?
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -66943,6 +66971,10 @@ MonoBehaviour:
     postionTop: 1
     message: Les failles sont de plus en plus nombreuses, tu dois detruire les reploids
       qui en sont la cause !
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -68771,6 +68803,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: 789f1ebb45e1f8c45a54e7fd42fe054c, type: 3}
     postionTop: 1
     message: Veux tu upgrader tes blaster ?
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -79797,6 +79833,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: c41087af209b6834ba66d5c4aca477d9, type: 3}
     postionTop: 1
     message: Veux tu upgrader tes sabres ?
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1
@@ -84277,6 +84317,10 @@ MonoBehaviour:
     face: {fileID: 21300000, guid: fd355311bb4513f43919311cd18c4f0d, type: 3}
     postionTop: 1
     message: Souhaites tu investir des cristaux dans mes musiques ?
+    setActiveGameObject: {fileID: 0}
+    setInactiveGameObject: {fileID: 0}
+    stopingBgm: {fileID: 0}
+    playAudio: {fileID: 0}
   needInputToActivate: 1
   isBlocking: 1
   multiRead: 1

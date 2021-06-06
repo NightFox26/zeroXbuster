@@ -74866,7 +74866,7 @@ PrefabInstance:
     - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
         type: 3}
       propertyPath: speedMovement
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
         type: 3}
@@ -74881,12 +74881,12 @@ PrefabInstance:
     - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
         type: 3}
       propertyPath: exp
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
         type: 3}
       propertyPath: maxHealth
-      value: 5000
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
         type: 3}
@@ -74901,7 +74901,28 @@ PrefabInstance:
     - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
         type: 3}
       propertyPath: idleRate
-      value: 12
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
+        type: 3}
+      propertyPath: enemyType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
+        type: 3}
+      propertyPath: iaRateAtk
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7657440410559678878, guid: 4361215e203deff4ba08afbb040785c4,
+        type: 3}
+      propertyPath: bulletsPref
+      value: 
+      objectReference: {fileID: 8537793072739722167, guid: 3d1a78d9b3be8394c988f39900cf5a9c,
+        type: 3}
+    - target: {fileID: 8734912253515153431, guid: 4361215e203deff4ba08afbb040785c4,
+        type: 3}
+      propertyPath: m_Name
+      value: bulletPos
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4401979972565834839, guid: 4361215e203deff4ba08afbb040785c4, type: 3}
@@ -75000,12 +75021,12 @@ PrefabInstance:
     - target: {fileID: 8398582404784931051, guid: 23d7f6cbcd2d05146909d104614cc2cd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 203.82
+      value: 204.3
       objectReference: {fileID: 0}
     - target: {fileID: 8398582404784931051, guid: 23d7f6cbcd2d05146909d104614cc2cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -401.8
+      value: -401.5
       objectReference: {fileID: 0}
     - target: {fileID: 8398582404784931051, guid: 23d7f6cbcd2d05146909d104614cc2cd,
         type: 3}

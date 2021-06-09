@@ -7,7 +7,8 @@ public class Bullet : MonoBehaviour
     public float energyCost = 5;
     public float speed = 10f;
     public float lifeTimeBullet = 8;
-    public AudioSource audioBullet;
+    public AudioClip audioBullet;
+    public AudioClip audioDestroyBullet;
     public GameObject explosionAnimation;   
     public bool destoyOnTagGround = true;
     public bool isHorizontalShooting = true;
@@ -31,7 +32,7 @@ public class Bullet : MonoBehaviour
         animator = GetComponent<Animator>();
 
         if(audioBullet){
-            audioBullet.Play();
+            AudioManager.Instance.Play(audioBullet);
         }
     }
 
@@ -125,6 +126,10 @@ public class Bullet : MonoBehaviour
 
     private void destroyBullet(bool forcedDestroy = false){        
         if(!isPerforating || forcedDestroy){
+            if(audioDestroyBullet){
+                AudioManager.Instance.Play(audioDestroyBullet);
+            }
+
             if(explosionAnimation != null){
                 explodeBullet(transform.position);
                 Destroy(gameObject);

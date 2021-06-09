@@ -4,7 +4,6 @@ using UnityEngine;
 public class playerEnemyKillCounter : MonoBehaviour
 {
     public static playerEnemyKillCounter instance;
-    public AudioSource stealthKillAudio;
 
     private Dictionary<string,int> listEnemies;
     public List<string> listEnemiesGetReward;
@@ -21,7 +20,7 @@ public class playerEnemyKillCounter : MonoBehaviour
 
     public void addKillEnemyCounter(GameObject enemy){   
         if(PlayerHealth.instance.getStealthMode() == true){
-            stealthKillAudio.Play();
+            AudioManager.Instance.PlayVoice(PlayerSounds.instance.stealthKillSound);
         }
 
         string enemyName = enemy.GetComponent<Enemy>().name;     

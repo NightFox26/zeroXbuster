@@ -24,13 +24,16 @@ public class PlayerActions : MonoBehaviour
     public bool isShootingAllowed;
     [HideInInspector]
     public bool isAttacking;
+
+    [HideInInspector]
     public bool isQuickTp;
+    [HideInInspector]
     public bool canQuickTpAgain = true;
 
     [HideInInspector]
     public bool isThirdHit = false;
 
-    public GameObject quickTpHitPrefab;
+    public GameObject quickTpEffectPrefab;
     public GameObject bulletPrefab;
     public GameObject chargedBulletPrefab;
     public Transform bulletPos;
@@ -161,13 +164,31 @@ public class PlayerActions : MonoBehaviour
 
     private void doQuickTp(){
         if(PlayerStats.instance.currentBulletsQt>=energieCostQuickTp){
+            AudioManager.Instance.Play(PlayerSounds.instance.diveSound);
             PlayerStats.instance.looseBullets(energieCostQuickTp);
+            Transform playerInitPos = transform;
             isQuickTp = true;
+            PlayerMove.instance.stopGravity();
+            PlayerMove.instance.passingThroughtEnemy();
             canQuickTpAgain = false;
+            StartCoroutine(stopQuickTp(playerInitPos));
         }
     }
     
-    public void stopQuickTp(){
+    IEnumerator stopQuickTp(Transform initPos){
+        float yDir = PlayerMove.instance.verticalMovement;
+        float xDir = Mathf.Clamp(PlayerMove.instance.horizontalMovement,0.01f,1f);
+        float directionDivide = yDir / xDir;
+        float angle = Mathf.Rad2Deg*Mathf.Atan(directionDivide);
+        if(xDir < 0){
+            angle = 180 + angle;
+        }       
+        
+        Instantiate(quickTpEffectPrefab,transform.position,Quaternion.Euler(0,0, angle));        
+        
+        yield return new WaitForSeconds(0.33f);
+        PlayerMove.instance.reGravity();
+        PlayerMove.instance.stopPassingThroughtEnemy();
         isQuickTp = false;
     }    
 
@@ -256,13 +277,7 @@ public class PlayerActions : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(isQuickTp){
             if(other.CompareTag("enemy")){
-                if(PlayerMove.instance.facingRight){
-                    Instantiate(quickTpHitPrefab,other.gameObject.transform.position,Quaternion.identity);
-                }else{
-                    Instantiate(quickTpHitPrefab,other.gameObject.transform.position,Quaternion.Euler (0f, 180f, 0f));
-                }
                 other.GetComponent<Enemy>().takeDamage(PlayerStats.instance.damage, true, false);
-
                 if(other.GetComponent<Enemy>().currentHealth <= 0){
                     PlayerMove.instance.isJumpAllowed = true;
                     canQuickTpAgain = true;

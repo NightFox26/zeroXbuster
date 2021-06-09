@@ -3,8 +3,7 @@
 public class BulletChallenge : Bullet
 {
     [HideInInspector]
-    public ChallengeRoom challengeConfig;
-    
+    public ChallengeRoom challengeConfig;    
 
     private void Update() {
         if(challengeConfig.challengeWin){

@@ -18,8 +18,6 @@ public class PlayerHealth : MonoBehaviour
   public bool isDying;
   public float invinsibilityTime = 0.7f;
   private bool stealthMode = true;
-  public AudioSource playerDeadSound; 
-  public AudioSource stealthModeActivated; 
   public GameObject hurtAnimation;
   public static PlayerHealth instance;
 
@@ -99,15 +97,14 @@ public class PlayerHealth : MonoBehaviour
       isHurted = false;
   }
 
-  public void isNotStealth(){
-      stealthModeActivated.Stop();
+  public void isNotStealth(){      
       stealthMode = false;
       stealthIcon.SetActive(false);
   }
 
   public void isStealth(bool playAudio = false){
-      if(playAudio && SceneManager.GetActiveScene().name != "preLoadGameComponents" && !stealthMode){
-        stealthModeActivated.Play();
+      if(playAudio && SceneManager.GetActiveScene().name != "preLoadGameComponents" && !stealthMode){        
+        AudioManager.Instance.PlayVoice(PlayerSounds.instance.stealthModeSound);
       }
       stealthMode = true;
       stealthIcon.SetActive(true);
@@ -148,7 +145,7 @@ public class PlayerHealth : MonoBehaviour
         
         PlayerMove.instance.moveDisable();
         GameoverManager gom = GameoverManager.instance;
-        playerDeadSound.Play();
+        AudioManager.Instance.Play(PlayerSounds.instance.deadSound);
         faillureSystemeDecrease();
         gom.stageNameLostCrystal = SceneManager.GetActiveScene().name;
         gom.qtLostCrystal = PlayerStats.instance.totalShards; 
@@ -161,7 +158,7 @@ public class PlayerHealth : MonoBehaviour
     public void dieInFaille(){
         PlayerMove.instance.moveDisable();
         isHurted = false;
-        playerDeadSound.Play();        
+        AudioManager.Instance.Play(PlayerSounds.instance.deadSound);      
         PlayerMove.instance.playTeleportationAnimation();
         Invoke("delayExitFaille",0.6f);
     }

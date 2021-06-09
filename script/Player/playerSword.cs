@@ -3,15 +3,10 @@
 public class playerSword : MonoBehaviour
 {
     public CircleCollider2D swordBox;
-
     public Transform swordPosition;
     public float swordRadius;
-    public GameObject hitAnimation;
-
-    public AudioSource[] sounds;
-    
+    public GameObject hitAnimation;    
     public GameObject thirdHitAnimation;
-
     public static playerSword instance;
 
     private void Awake() {
@@ -37,7 +32,13 @@ public class playerSword : MonoBehaviour
     }
 
     public void playSaberSong(int i){
-        sounds[i].Play();
+        if(i == 1){
+            AudioManager.Instance.Play(PlayerSounds.instance.saber1);
+        }else if(i == 2){
+            AudioManager.Instance.Play(PlayerSounds.instance.saber2);
+        }else if(i == 3){
+            AudioManager.Instance.Play(PlayerSounds.instance.saber3);
+        }        
     }
 
     public void thirdStrikeAnimation(){

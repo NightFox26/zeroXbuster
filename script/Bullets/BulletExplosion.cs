@@ -3,6 +3,7 @@
 public class BulletExplosion : MonoBehaviour
 {
     public float damageExplosion = 0;
+    public AudioClip audioExplosion;
     public Vector2 souffleExplosion = new Vector2(-500,50);
     private bool exploded = false;
     public float radiusExplosion;
@@ -29,6 +30,9 @@ public class BulletExplosion : MonoBehaviour
         if(other.CompareTag("Player")){
             exploded = true;
             PlayerHealth.instance.takeDamage(damageExplosion);
+            if(audioExplosion){
+                AudioManager.Instance.Play(audioExplosion);
+            }
         }
     }
 

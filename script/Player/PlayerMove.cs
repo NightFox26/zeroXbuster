@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     [HideInInspector]
     public bool facingRight = true;
     public float grounCheckRadius;
-    public float wallCheckRadius;
+    public float wallCheckRadius;   
     public LayerMask collisionLayers;
     public LayerMask collisionRollingLayers;
     public static PlayerMove instance;
@@ -42,6 +42,11 @@ public class PlayerMove : MonoBehaviour
 
     [HideInInspector]
     public bool isRolling;
+
+    [HideInInspector]
+    public float horizontalMovement;
+    [HideInInspector]
+    public float verticalMovement;
     
 
     private void Awake() {
@@ -144,6 +149,7 @@ public class PlayerMove : MonoBehaviour
 
         //gestion de la roulade
         if(Input.GetButtonDown("Fire2") && isRollingAllowed){ 
+            AudioManager.Instance.Play(PlayerSounds.instance.rouladeSound);
             isRollingAllowed = false;       
             actions.isShootingAllowed = false;
             isRolling = true;
@@ -151,7 +157,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         //gestion du dash
-        if(Input.GetButtonDown("L1") && isDashing == false && isCriticalDashing == false && !isTouchingWall){            
+        if(Input.GetButtonDown("L1") && isDashing == false && isCriticalDashing == false && !isTouchingWall){ 
             isDashing = true;
             actions.isShootingAllowed = false;
             dashDustAnim.SetTrigger("isDashing");
@@ -164,15 +170,15 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {         
-        float horizontalMovement = Input.GetAxis("Horizontal"); 
-        float verticalMovement = Input.GetAxis("Vertical"); 
+        horizontalMovement = Input.GetAxis("Horizontal"); 
+        verticalMovement = Input.GetAxis("Vertical"); 
         
         if(!isTeleporting && !PlayerHealth.instance.isDying){ 
 
             //QuickTp
             if(actions.isQuickTp){
                 rb2d.velocity = new Vector2(0,0);               
-                rb2d.AddForce(new Vector2(actions.impulseForceQuickTp * horizontalMovement,actions.impulseForceQuickTp * verticalMovement),ForceMode2D.Impulse);
+                rb2d.AddForce(new Vector2(actions.impulseForceQuickTp * horizontalMovement,actions.impulseForceQuickTp * verticalMovement),ForceMode2D.Impulse);                
                 return;
             }
 
@@ -235,7 +241,15 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-    }    
+    }
+
+    public void stopGravity(){
+        rb2d.gravityScale = 0;
+    }
+
+    public void reGravity(){
+        rb2d.gravityScale = gravityScaleInit;
+    }
 
     private float getJumpForce(){
         return PlayerStats.instance.jumpPower;
@@ -334,7 +348,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void checkIfTouchingWall(){  
-        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position,grounCheckRadius,collisionLayers);        
+        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position,grounCheckRadius,collisionRollingLayers);        
         if(isTouchingWall && !isGrounded){
             actions.canQuickTpAgain = true;
             actions.isJumpSwordRolling = false;

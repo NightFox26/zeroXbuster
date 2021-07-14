@@ -11,6 +11,7 @@ public class LevelConfig : MonoBehaviour
     private GameObject mainCamera;
     public Material nightMaterial;
     public Material dayMaterial;
+    public Light directionalLight;
 
     private GameObject loadingScreen;
     private Animator animatorFondu;
@@ -20,6 +21,15 @@ public class LevelConfig : MonoBehaviour
     public float timeToRunMinutes = 5.0f;
     private AudioSource bgmStage;
     public Transform exitPos;
+    public GameObject radarAnimation;
+
+    [Header("enemies list")]
+    public GameObject[] enmiesEasy;
+    public int nbSpawnEasy = 4;
+    public GameObject[] enmiesNormal;
+    public int nbSpawnNormal = 5;
+    public GameObject[] enmiesHard;
+    public int nbSpawnHard = 6;
 
     public static LevelConfig instance;
 
@@ -35,8 +45,10 @@ public class LevelConfig : MonoBehaviour
         mainCamera.transform.Find("bg").GetComponent<SpriteRenderer>().sprite = backgroundImage;
         if(isNightLevel){
             mainCamera.transform.Find("bg").GetComponent<SpriteRenderer>().material = nightMaterial;
+            directionalLight.intensity = 0.10f;
         }else{
             mainCamera.transform.Find("bg").GetComponent<SpriteRenderer>().material = dayMaterial;
+            directionalLight.intensity = 0.5f;
         }
     }
 
@@ -101,7 +113,7 @@ public class LevelConfig : MonoBehaviour
     private void spawnPlayerAtPoint(){ 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         GameObject spawnPoint =  GameObject.FindGameObjectWithTag("Respawn"); 
-        player.transform.position = spawnPoint.transform.position; 
+        player.transform.position = new Vector3(spawnPoint.transform.position.x,spawnPoint.transform.position.y,-1); 
         mainCamera.GetComponent<CameraFollow>().goFindPlayer();
     }
 

@@ -8,8 +8,7 @@ public class ItemNeuroHack : Item
     private float value1 = 0;
     private bool startSmoothDamp;
     private Transform player;
-    private float smoothTime = 0.3f;
-    private Vector2 velocity = Vector2.zero;
+    private float smoothTime = 0.4f;
     private Animator animator;
 
     void Start()
@@ -22,14 +21,14 @@ public class ItemNeuroHack : Item
         lightItem.GetComponent<Light>().color = ItemColor.red();
         animator = GetComponent<Animator>();
     }
-    private void Update() {
-        if(startSmoothDamp){            
-            transform.position = Vector2.SmoothDamp(transform.position,player.position, ref velocity, smoothTime);
+    private void FixedUpdate() {
+        if(startSmoothDamp){ 
+            transform.position = Vector3.MoveTowards(transform.position, player.position, smoothTime);
 
-            if(transform.position.x <= player.position.x + 0.3f &&
-            transform.position.x >= player.position.x - 0.3f &&
-            transform.position.y <= player.position.y + 0.3f && 
-            transform.position.y >= player.position.y - 0.3f
+            if(transform.position.x <= player.position.x + 0.1f &&
+            transform.position.x >= player.position.x - 0.1f &&
+            transform.position.y <= player.position.y + 0.1f && 
+            transform.position.y >= player.position.y - 0.1f
             ){ 
                 hackPlayer();
                 Destroy(gameObject);

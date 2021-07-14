@@ -37,8 +37,7 @@ public class CrystalScript : Item
 
     private new void OnTriggerEnter2D(Collider2D col) {
         if(col.CompareTag("Player")){
-            CrystalsShardsCounter.instance.addCrystalShardsValue(value);
-            
+            CrystalsShardsCounter.instance.addCrystalShardsValue(value);            
         }
         base.OnTriggerEnter2D(col);
     }

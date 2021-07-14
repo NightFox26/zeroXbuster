@@ -26,6 +26,8 @@ public class EnemyPatrol : MonoBehaviour
 
     [HideInInspector]
     public bool isFacingLeft = true;
+    [HideInInspector]
+    public bool isPlayerOnRight = false;
 
     private SpriteRenderer spriteRenderer;
 
@@ -41,6 +43,8 @@ public class EnemyPatrol : MonoBehaviour
 
 
     public Transform eyes;
+
+    [Header( "ground detection")]
     public Vector3 checkHoleDirection;
     public float lengthVision;
 
@@ -82,9 +86,11 @@ public class EnemyPatrol : MonoBehaviour
         if(allwaysWatchingPlayer){
             if(player.transform.position.x > enemy.transform.position.x){
                 isFacingLeft = false;
+                isPlayerOnRight = true;
                 transform.eulerAngles = new Vector3(0, 180, 0);                
             }else{
                 isFacingLeft = true;
+                isPlayerOnRight = false;
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
@@ -101,6 +107,12 @@ public class EnemyPatrol : MonoBehaviour
         if(enemyShooter != null){
             if(enemyShooter.isShooting || (moveWhenDetect && !enemyShooter.playerDetected))
                 return;         
+        }
+
+        if(enemyChaser != null){
+            if(enemyChaser.playerDetected) {                
+                return;            
+            }             
         }
 
         if(enemyChaser != null){
@@ -129,13 +141,16 @@ public class EnemyPatrol : MonoBehaviour
                 if(!isFreeToMove){
                     checkIfOverMoveLimits();
                 }else{
-                    checkIfBlocked();
+                    if(enemyChaser != null){
+                        print("here");
+                        checkIfBlocked();
+                    }
                 }
             }            
             lastPosition = transform.position; 
             timeDelayToCheckIfBlocked += Time.deltaTime;                     
         }        
-    }    
+    } 
 
     private void playMovingAnim(){
         if(isFlying){
@@ -171,8 +186,9 @@ public class EnemyPatrol : MonoBehaviour
 
             RaycastHit2D ray = Physics2D.Raycast(eyes.position,checkHoleDirection,lengthVision,LayerMask.GetMask("ground"));
             //Debug.DrawRay(eyes.position,checkHoleDirection*lengthVision,Color.red,0.1f);            
-            if (!ray.collider)
+            if (!ray.collider){
                 goToTheOtherSideX();          
+            }
         }
     }
 
@@ -191,12 +207,12 @@ public class EnemyPatrol : MonoBehaviour
         if(transform.position.y <= initEnemyPos.y - limitsMove.y/2) goUp();
     }
 
-    private void checkIfBlocked(){
-        if((transform.position.x - lastPosition.x == 0) ){                         
+    private void checkIfBlocked(){ 
+        if((transform.position.x - lastPosition.x == 0) ){
             goToTheOtherSideX();                
         }
 
-        if((transform.position.y - lastPosition.y == 0) ){                         
+        if((transform.position.y - lastPosition.y == 0) ){ 
             goToTheOtherSideY();                
         }
     }
@@ -225,12 +241,12 @@ public class EnemyPatrol : MonoBehaviour
         timeDelayToCheckIfBlocked = 0;   
     }
 
-    private void goToTheOtherSideX(){
+    public void goToTheOtherSideX(){
         velocityX = -velocityX;  
         timeDelayToCheckIfBlocked = 0;      
     }
 
-    private void goToTheOtherSideY(){
+    public void goToTheOtherSideY(){
         velocityY = -velocityY;  
         timeDelayToCheckIfBlocked = 0;      
     }

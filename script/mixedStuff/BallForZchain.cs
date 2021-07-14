@@ -7,7 +7,6 @@ public class BallForZchain : MonoBehaviour
     public float smoothTime = 5;
     public float delayToStopGravity = 0.2f;
     private bool startSmoothDamp = false;
-    private Vector2 velocity = Vector2.zero;
     private Rigidbody2D rb;
 
     void Start()
@@ -19,14 +18,14 @@ public class BallForZchain : MonoBehaviour
         StartCoroutine(waitForDisableGravity());   
     }
 
-    private void Update() {
-        if(startSmoothDamp){            
-            transform.position = Vector2.SmoothDamp(transform.position, Camera.main.ScreenToWorldPoint(Zchain.position), ref velocity, smoothTime);
+    private void FixedUpdate() {
+        if(startSmoothDamp){  
+            transform.position = Vector3.MoveTowards(transform.position, Camera.main.ScreenToWorldPoint(Zchain.position), smoothTime);            
 
-            if(transform.position.x <= Camera.main.ScreenToWorldPoint(Zchain.position).x + 0.3f &&
-            transform.position.x >= Camera.main.ScreenToWorldPoint(Zchain.position).x - 0.3f &&
-            transform.position.y <= Camera.main.ScreenToWorldPoint(Zchain.position).y + 0.3f && 
-            transform.position.y >= Camera.main.ScreenToWorldPoint(Zchain.position).y - 0.3f
+            if(transform.position.x <= Camera.main.ScreenToWorldPoint(Zchain.position).x + 0.1f &&
+            transform.position.x >= Camera.main.ScreenToWorldPoint(Zchain.position).x - 0.1f &&
+            transform.position.y <= Camera.main.ScreenToWorldPoint(Zchain.position).y + 0.1f && 
+            transform.position.y >= Camera.main.ScreenToWorldPoint(Zchain.position).y - 0.1f
             ){            
                 PlayerCombo.instance.comboUp(); 
                 Destroy(gameObject);

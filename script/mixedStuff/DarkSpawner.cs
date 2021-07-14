@@ -3,11 +3,19 @@
 public class DarkSpawner : MonoBehaviour
 {
     public GameObject boss;
-    public GameObject showInactiveboss;
+    public GameObject showGameObject;
+    public GameObject hideGameObject;
     private Transform spawnPos;
+    private Animator animator;
 
     private void Start() {
         spawnPos = transform.Find("bossSpawnPos");
+        animator = GetComponent<Animator>();
+        animator.SetBool("isHidingAnimation",false);
+
+        if(hideGameObject != null){
+            animator.SetBool("isHidingAnimation",true);
+        }
     }
 
     public void instantiateBoss(){
@@ -15,6 +23,10 @@ public class DarkSpawner : MonoBehaviour
     }
 
     public void showBoss(){
-        showInactiveboss.SetActive(true);
+        showGameObject.SetActive(true);
+    }
+
+    public void hideBoss(){
+        hideGameObject.SetActive(false);
     }
 }

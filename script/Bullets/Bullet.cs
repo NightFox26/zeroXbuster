@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public float energyCost = 5;
     public float speed = 10f;
     public float lifeTimeBullet = 8;
+    private float timeBulletSinceLaunched = 0;
     public AudioClip audioBullet;
     public AudioClip audioDestroyBullet;
     public GameObject explosionAnimation;   
@@ -51,12 +52,14 @@ public class Bullet : MonoBehaviour
                 }
             }
         }else if(isRealHomming){
+            timeBulletSinceLaunched += Time.deltaTime;
             if(!isPlayerBullet){     
                 Vector2 direction = (Vector2)playerTransform.position - rb.position;  
                 direction.Normalize(); 
                 float rotateAmount = Vector3.Cross(direction, transform.up).z;   
-                rb.angularVelocity = rotateAmount * 200;  
-                rb.velocity = -transform.up * speed;
+                rb.angularVelocity = -rotateAmount * 100; 
+                rb.velocity = transform.up * speed;
+                                        
             }            
         }else{
             if(isHorizontalShooting){

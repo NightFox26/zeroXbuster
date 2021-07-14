@@ -37,6 +37,7 @@ public class IntroStage : MonoBehaviour
 
         if(fallingPlatform != null){
             if(dialogNephtis.isDialogueFinished && !isPlatformFalling){
+                PlayerMove.instance.disableWallClimb();
                 isPlatformFalling = true;
                 goodPlatform.SetActive(false);
                 darkSpawner.SetActive(true);
@@ -52,6 +53,7 @@ public class IntroStage : MonoBehaviour
                 fallingPlatform.GetComponent<Rigidbody2D>().gravityScale = 8;
                 uiAccelerateEffect.SetActive(false);
                 setSparkingPlatform(false);
+                PlayerMove.instance.enableWallClimb();
                 Destroy(fallingPlatform,1);
             }
         }

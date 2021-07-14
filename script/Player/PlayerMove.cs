@@ -33,6 +33,7 @@ public class PlayerMove : MonoBehaviour
     [HideInInspector]
     public bool isFalling;
     public bool isTouchingWall;
+    public bool isAllowedToWallClimb;
     public bool isGrounded;
 
     [HideInInspector]
@@ -63,6 +64,7 @@ public class PlayerMove : MonoBehaviour
         isRollingAllowed = true;
         actions = GetComponent<PlayerActions>();      
         health = GetComponent<PlayerHealth>();
+        isAllowedToWallClimb = true;
     }
     
 
@@ -71,7 +73,7 @@ public class PlayerMove : MonoBehaviour
         checkIfTouchingWall();
         checkIfGrounded();
         if(!isGrounded && !health.isHurted && !health.isDying){
-            if(!isTouchingWall){
+            if(!isTouchingWall || !isAllowedToWallClimb){
                 if(actions.isQuickTp){
                     animator.Play("playerQuickTp");  
                 }else if(actions.isJumpSwordRolling){
@@ -94,7 +96,9 @@ public class PlayerMove : MonoBehaviour
                     animator.Play("playerFalling");
                 }
             }else{
-                animator.Play("playerWallClimb");
+                if(isAllowedToWallClimb){
+                    animator.Play("playerWallClimb");
+                }
             }
         }
 
@@ -221,7 +225,7 @@ public class PlayerMove : MonoBehaviour
             }  
 
             //glissade sur les murs
-            if(isTouchingWall){
+            if(isTouchingWall && isAllowedToWallClimb){
                 if(rb2d.velocity.y < -1 && !isGrounded){
                    rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y + 0.8f);             
                 }                
@@ -336,6 +340,14 @@ public class PlayerMove : MonoBehaviour
 
     public void disableJump(){
         isJumpAllowed = false;
+    }
+
+    public void disableWallClimb(){
+        isAllowedToWallClimb = false;
+    }
+
+    public void enableWallClimb(){
+        isAllowedToWallClimb = true;
     }
 
     private void checkIfGrounded(){          

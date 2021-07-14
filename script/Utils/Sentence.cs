@@ -12,5 +12,7 @@ public class Sentence
     public GameObject setActiveGameObject;
     public GameObject setInactiveGameObject;
     public AudioSource stopingBgm;
+    public AudioSource pausingBgm;
+    public AudioSource unPausingBgm;
     public AudioSource playAudio;
 }

@@ -1056,6 +1056,11 @@ PrefabInstance:
       propertyPath: failleSpawnPos
       value: 
       objectReference: {fileID: 105761577}
+    - target: {fileID: 1790113169846559042, guid: d9bb883e53de4e246a40c030bc5a4f01,
+        type: 3}
+      propertyPath: directionalLight
+      value: 
+      objectReference: {fileID: 2059458779}
     - target: {fileID: 3103665760258658673, guid: d9bb883e53de4e246a40c030bc5a4f01,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7449,7 +7454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186855431}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0295234, y: 2.084365, z: -9.97835}
+  m_LocalPosition: {x: -3.0295234, y: 2.084365, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

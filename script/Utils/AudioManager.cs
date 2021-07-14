@@ -3,6 +3,7 @@
 public class AudioManager : MonoBehaviour
 {	
 	public AudioSource VoicesSource;
+	public AudioSource InfosEffectSource;
 	public AudioSource EffectsSource;
 	public AudioSource MusicSource;
 	public float LowPitchRange = .95f;
@@ -32,6 +33,12 @@ public class AudioManager : MonoBehaviour
 	{
 		VoicesSource.clip = clip;
 		VoicesSource.Play();
+	}
+
+	public void PlayInfosEffectVoice(AudioClip clip)
+	{
+		InfosEffectSource.clip = clip;
+		InfosEffectSource.Play();
 	}
 
 	public void PlayMusic(AudioClip clip)

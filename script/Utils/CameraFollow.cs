@@ -6,12 +6,17 @@ public class CameraFollow : MonoBehaviour
     public Vector3 posOffset;
     private Vector3 velocity;
 
+    [HideInInspector]
     public float blockingCameraPosXmax;
+    [HideInInspector]
     public float blockingCameraPosXmin;
+    [HideInInspector]
     public float blockingCameraPosYmax;
+    [HideInInspector]
     public float blockingCameraPosYmin;
     private bool isLookingForPlayerMode = true;
 
+    [HideInInspector]
     public bool isTrackingPortal = false;
     private Vector2 newSpawnPortalPos;
 
@@ -44,7 +49,7 @@ public class CameraFollow : MonoBehaviour
 
     private void freeMoveCameraToPlayerPos(){
         if(!isLookingForPlayerMode){
-            transform.position = Vector3.SmoothDamp(transform.position,player.transform.position+posOffset,ref velocity,timeOffset);
+            transform.position = Vector3.SmoothDamp(transform.position,new Vector3(player.transform.position.x+posOffset.x,player.transform.position.y+posOffset.y,transform.position.z),ref velocity,timeOffset);
 
             if(transform.position.x >= blockingCameraPosXmax){
                 transform.position = new Vector3(blockingCameraPosXmax,transform.position.y,posOffset.z);
@@ -70,7 +75,7 @@ public class CameraFollow : MonoBehaviour
         // blockingCameraPosXmax = player.transform.position.x + 10;
         // blockingCameraPosYmax = player.transform.position.y + 6;
         // blockingCameraPosYmin = player.transform.position.y - 6;  
-        transform.position = player.transform.position;      
+        transform.position = new Vector3(player.transform.position.x,player.transform.position.y,transform.position.z);      
         Invoke("delayStopTrackingPLayer",0.5f);
     }
 

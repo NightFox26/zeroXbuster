@@ -72,7 +72,7 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
      }
 
-     public void StartDialogue(Sentence[] allSentences, bool isBlocking, string tpTo, bool showRankingBeforeTp, DialogueTrigger trigger){ 
+     public void StartDialogue(Sentence[] allSentences, bool isBlocking, string tpTo, bool showRankingBeforeTp, DialogueTrigger trigger, bool forcePLayerFacingRight){ 
          dialTrigger = trigger; 
          dialogueFinished = false;
          dialogueManagerActif = true; 
@@ -80,11 +80,16 @@ public class DialogueManager : MonoBehaviour
          isBlockingMessage = isBlocking;
          showRanking = showRankingBeforeTp;
 
+         if(forcePLayerFacingRight){
+            PlayerMove.instance.transform.eulerAngles = new Vector3(0, 0, 0);
+            PlayerMove.instance.facingRight = true;
+         }
+
          if(isBlockingMessage){
             PlayerMove.instance.animator.Play("playerIdle");
             PlayerMove.instance.moveDisable();
             HUD.SetActive(false);   
-         }   
+         }           
 
          sentences.Clear();
          foreach( Sentence sentence in allSentences){            
@@ -102,6 +107,14 @@ public class DialogueManager : MonoBehaviour
 
         if(sentence.stopingBgm != null){
            sentence.stopingBgm.Stop();
+        }
+
+        if(sentence.pausingBgm != null){
+           sentence.pausingBgm.Pause();
+        }
+
+        if(sentence.unPausingBgm != null){
+           sentence.unPausingBgm.UnPause();
         }
 
         if(sentence.playAudio != null){
@@ -164,11 +177,18 @@ public class DialogueManager : MonoBehaviour
             if(dialPanelBas.activeSelf){
                   dialPanelBasAnimator.SetBool("isShowing",false);
             }    
-            
-            //playerAnimator.SetBool("isWaiting",false);    
+                         
             HUD.SetActive(true);
             dialogueFinished = true;
             dialTrigger.isDialogueFinished = true;
+
+            if(dialTrigger.activateObjOnFinish !=null){
+               dialTrigger.activateObjOnFinish.SetActive(true);
+               if(dialTrigger.unPausingAudio){
+                  dialTrigger.Invoke("unPausingAudioSource",1.5f);
+               }
+            }
+
             PlayerMove.instance.moveEnable();
            
             if(showRanking && LevelConfig.instance.isLevelWithRanking){   
@@ -182,4 +202,5 @@ public class DialogueManager : MonoBehaviour
             }
         }        
      }
+
 }

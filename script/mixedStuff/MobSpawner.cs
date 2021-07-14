@@ -21,7 +21,6 @@ public class MobSpawner : MonoBehaviour
     private float maxYzone;
     private int randNbToSpawn = -1;
     private int spawnedEnemies = 0;
-    public GameObject radarAnimation;
 
     private void Start() {
         spawnZone = gameObject.GetComponent<BoxCollider2D>();
@@ -30,6 +29,18 @@ public class MobSpawner : MonoBehaviour
         maxXzone = spawnZone.transform.position.x+(spawnZone.size.x/2);
         minYzone = spawnZone.transform.position.y-(spawnZone.size.y/2)+1;
         maxYzone = spawnZone.transform.position.y+(spawnZone.size.y/2);
+
+        if(enemies.Length == 0){
+            if(StageParameters.instance.stageDifficulty == "easy"){
+                getEnemiesPoolByDifficulty(LevelConfig.instance.enmiesEasy);
+            }else if(StageParameters.instance.stageDifficulty == "normal"){
+                getEnemiesPoolByDifficulty(LevelConfig.instance.enmiesNormal);
+            }else if(StageParameters.instance.stageDifficulty == "hard"){
+                getEnemiesPoolByDifficulty(LevelConfig.instance.enmiesHard);
+            }else{
+                getEnemiesPoolByDifficulty(LevelConfig.instance.enmiesEasy);
+            }
+        }
 
         if(!isBoxDetecting){
             launchMobSpawning();
@@ -46,6 +57,14 @@ public class MobSpawner : MonoBehaviour
             }
         }
     }
+
+    private void getEnemiesPoolByDifficulty(GameObject[] enemiesPool){
+        if(enemiesPool.Length > 0){
+            enemies = enemiesPool;
+        }else{
+            Debug.LogWarning("La pool n'enemies n'est pas configuré pour ce niveau de difficulté ... dans LevelConfig");
+        }
+    }
     
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -60,34 +79,41 @@ public class MobSpawner : MonoBehaviour
         int minQtMob = 1;
         if(enemyCanBeNull) minQtMob = 0;
 
-        randNbToSpawn = Random.Range(minQtMob,maxSpawnEnemies+1);
-
-        if(!isDiscreteSpawning && randNbToSpawn>0){
-            GetComponent<AudioSource>().Play();
-        }
-
+        randNbToSpawn = Random.Range(minQtMob,maxSpawnEnemies+1);   
         for (int i = 0; i < randNbToSpawn; i++)
         {
-            instantiateRandMob();
+            Invoke("instantiateRandMob",1.5f+i);
         }
     }
 
     private void instantiateRandMob(){
         int mobRand = Random.Range(0,enemies.Length);
+        if(enemies.Length == 0) return;
+
+        GameObject radarAnim;
         if(randomPositionSpawn){
             float spawnX = Random.Range(minXzone,maxXzone);
             float spawnY = Random.Range(minYzone,maxYzone);
-            GameObject radarAnim = Instantiate(radarAnimation,new Vector3(spawnX,spawnY-0.5f,-1),Quaternion.identity);      
+            radarAnim = Instantiate(LevelConfig.instance.radarAnimation,new Vector3(spawnX,spawnY-0.5f,-1),Quaternion.identity);      
             StartCoroutine(makeSpawnEnemyDelay(enemies[mobRand],radarAnim,new Vector3(spawnX,spawnY,0)));
-        }else{
-            GameObject radarAnim = Instantiate(radarAnimation,new Vector3(transform.position.x,transform.position.y-0.5f,-1),Quaternion.identity);            
+        }else{            
+            radarAnim = Instantiate(LevelConfig.instance.radarAnimation,new Vector3(transform.position.x,transform.position.y-0.5f,-1),Quaternion.identity);                      
             StartCoroutine(makeSpawnEnemyDelay(enemies[mobRand],radarAnim,transform.position));
+        }
+
+        if(isDiscreteSpawning){
+            radarAnim.GetComponent<AudioSource>().enabled = false;
+            Destroy(radarAnim);
         }
     }
 
 
     IEnumerator makeSpawnEnemyDelay(GameObject enemy, GameObject radarAnim, Vector3 position){
-        yield return new WaitForSeconds(1.5f);
+        if(isDiscreteSpawning){
+            yield return new WaitForSeconds(0.5f);
+        }else{
+            yield return new WaitForSeconds(1.5f);
+        }
         Instantiate(enemy,position,Quaternion.identity);
         Destroy(radarAnim);
         spawnedEnemies++;

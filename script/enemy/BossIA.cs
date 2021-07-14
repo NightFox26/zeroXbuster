@@ -132,9 +132,9 @@ public class BossIA : Enemy
         stopAllStates();
         isRunning = true;
         if(playerPosRight){
-            rb.velocity = new Vector2(speedMovement,0);
+            rb.velocity = new Vector2(speedMovement,rb.velocity.y);
         }else{
-            rb.velocity = new Vector2(-speedMovement,0);
+            rb.velocity = new Vector2(-speedMovement,rb.velocity.y);
         }        
     }
 

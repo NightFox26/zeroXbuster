@@ -1,9 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyChaser : MonoBehaviour
 {
     public float detectionRange; 
     public bool isTrackingPlayer = true;
+
+    [Header("Keep distance")]
+    public bool keepDistanceToPlayer = false;
+    private Vector3 distanceToPlayer;
+    public Vector3 distanceToPlayerMin;
+    public Vector3 distanceToPlayerMax;
+
+    [Header("time to reach")]
     public float deltaTimeToReach = 1;
     private float tempDeltaTimeToReach;
     private GameObject player;
@@ -20,7 +29,13 @@ public class EnemyChaser : MonoBehaviour
         playerLayerMask = LayerMask.GetMask("player");
         enemyPatrol = GetComponent<EnemyPatrol>(); 
         warningAtk = transform.Find("warningAtk").gameObject; 
+        getDistanceToPlayer();
         resetTimeToReach();
+    }
+
+    private void getDistanceToPlayer(){
+        if(keepDistanceToPlayer)
+            distanceToPlayer = new Vector3(UnityEngine.Random.Range(distanceToPlayerMin.x, distanceToPlayerMax.x + 1),UnityEngine.Random.Range(distanceToPlayerMin.y, distanceToPlayerMax.y + 1),UnityEngine.Random.Range(distanceToPlayerMin.z, distanceToPlayerMax.z + 1));
     }
 
     void Update()
@@ -32,7 +47,30 @@ public class EnemyChaser : MonoBehaviour
 
             if(isTrackingPlayer){
                 enemyPatrol.allwaysWatchingPlayer = true;
-                transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref velocity,tempDeltaTimeToReach);
+
+                if(keepDistanceToPlayer){                    
+                    Vector3 tempdistanceToPlayer;                 
+                    if(enemyPatrol.isPlayerOnRight){
+                        tempdistanceToPlayer = new Vector3(-distanceToPlayer.x, distanceToPlayer.y,distanceToPlayer.z);
+                    }else{                        
+                        tempdistanceToPlayer = new Vector3(distanceToPlayer.x, distanceToPlayer.y,distanceToPlayer.z);
+                    }
+                    //transform.position = Vector3.MoveTowards(transform.position, player.transform.position + tempdistanceToPlayer, tempDeltaTimeToReach * Time.deltaTime);
+
+                    Vector3 posToReach = transform.position;
+                    if(tempDeltaTimeToReach > 0){
+                        posToReach = player.transform.position + tempdistanceToPlayer;
+                    }
+                    transform.position = Vector3.SmoothDamp(transform.position,posToReach , ref velocity,tempDeltaTimeToReach*Time.deltaTime*200);
+
+                    if(tempDeltaTimeToReach < -0.2f){
+                        enemyPatrol.goToTheOtherSideX();
+                        getDistanceToPlayer();
+                        resetTimeToReach();
+                    }
+                }else{
+                    transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref velocity,tempDeltaTimeToReach);
+                }
 
                 if (Vector3.Distance(transform.position, player.transform.position) < 0.001f){        
                     resetTimeToReach();
